@@ -29,8 +29,23 @@ class NearestEnemyFinder:
         :param signatures: a list of radar signatures of planes. Coordinate system based around our plane being (0,0)
         :return: the N nearest enemy targets. If there are less than N enemy radar then return the
         """
+        if number_targets == 0:
+            return []
+        elif number_targets < 0:
+            return "Error"
+        cache = []
+        for target in signatures:
+            if target.friend_foe == FriendFoe(2):
+                cache.append([self.distance_from_orig(target.x, target.y), target])
+        if len(cache) <= number_targets:
+            return "Error"
+        else:
+            cache.sort()
+            return [cache[i][1] for i in range(number_targets)]
 
-        # TODO - exercise for the student to write an implementation
+    def distance_from_orig(self, x,y):
+        return (x**2 + y**2)**0.5
+
 
 
 
