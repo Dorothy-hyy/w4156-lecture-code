@@ -1,4 +1,5 @@
 import unittest
+from lectures.testing.tdd.efficientfrontier.efficient_frontier import efficient_frontier
 
 
 class TestEffficientFrontier(unittest.TestCase):
@@ -35,6 +36,8 @@ class TestEffficientFrontier(unittest.TestCase):
 
     It should return a set of 'optimal' set of investments sorted from lowest return to highest return.
     """
+    def setUp(self):
+        self.decide_invest = efficient_frontier()
 
     def test_pareto(self):
         """
@@ -54,7 +57,20 @@ class TestEffficientFrontier(unittest.TestCase):
 
         Run test coverage. Inspect the coverage and make a decision about whether test suite is 'adequate'
         """
-        pass
+        cases1 = [
+            [(-1, 69),(-1, 70),(-1, 90),(-1, 91)]
+        ]
+        cases2 = [
+           [(6,3),(2,1),(6,2),(8,4)]
+        ]
+
+        for case in cases1:
+            value = self.decide_invest.calculate_effi_fron(case)
+            self.assertEqual(value, [])
+        for case in cases2:
+            value = self.decide_invest.calculate_effi_fron(case)
+            self.assertEqual(value, [(8,4),(6,2),(2,1)])
+
 
 
 if __name__ == '__main__':
